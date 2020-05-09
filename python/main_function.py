@@ -1,3 +1,4 @@
+#!/usr/bin/python
 
 def sum_odd_even(lb, ub):
 	esum = 0

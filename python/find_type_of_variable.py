@@ -1,11 +1,13 @@
-a = 10
-print(type(a))
+#!/usr/bin/python
 
-b = "akshay"
-print(type(b))
+def print_variable_type(var):
+	print(type(var))
 
-b = 3.27
-print(type(b))
+def main():
+	print_variable_type(10)
+	print_variable_type("akshay")
+	print_variable_type(3.27)
+	print_variable_type(10 + 3j)
 
-b = 10 + 3j
-print(type(b))
+if __name__ == "__main__":
+	main()
