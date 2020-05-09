@@ -7,7 +7,7 @@
 #* * * *
 #
 
-def pattern_d(n):
+def pattern_f(n):
 	p = ""
 	for i in range(n):
 		for j in range(n - i):
@@ -20,7 +20,7 @@ def pattern_d(n):
 
 def main():
 	n = input("Enter n : ")
-	pattern_d(n)
+	pattern_f(n)
 
 if __name__ == "__main__":
 	main()
