@@ -3,9 +3,22 @@
 #
 # WaP to check if given number is a Palindrome
 #
+def reverse_int(number):
+    rev = 0;
+    sign = 1
+    if number < 0:
+        sign = -1
+        number *= sign
+
+    while number:
+        rev = (rev * 10) + (number % 10)
+        number /= 10
+
+    return rev * sign
 
 def is_palindrome(number):
-	return str(number) == str(number)[ : : -1]
+	rev = reverse_int(number)
+	return rev == number
 
 def main():
 	number = input("Enter number to check if its palindrome : ")
