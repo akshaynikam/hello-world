@@ -1,24 +1,24 @@
 #!/usr/bin/python
 
-l = list()
-size = 0
-capasity = 5
+g_l = list()
+g_size = 0
+g_capasity = 5
 
 def push_stack(element):
-    global size
-    if size == capasity:
+    global g_size
+    if g_size == g_capasity:
         print("Stack is full")
     else:
-        l.append(element)
-        size += 1
+        g_l.append(element)
+        g_size += 1
 
 def pop_stack():
-    global size
-    if size == 0:
+    global g_size
+    if g_size == 0:
         print("Stack is empty")
         return -1
-    size -= 1
-    return l.pop()
+    g_size -= 1
+    return g_l.pop()
 
 def main():
     while 1:
