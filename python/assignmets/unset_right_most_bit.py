@@ -5,12 +5,12 @@
 #
 
 def turn_off_righmost_bit(number):
-	return number & (~1)
+    return number & (~1)
 
 def main():
-	number = input("Enter number to turn off its rightmost bit : ")
-	number = turn_off_righmost_bit(number)
-	print("Result : %d" % (number))
+    number = input("Enter number to turn off its rightmost bit : ")
+    number = turn_off_righmost_bit(number)
+    print("Result : %d" % (number))
 
 if __name__ == "__main__":
-	main()
+    main()
