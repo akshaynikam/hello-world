@@ -1,11 +1,11 @@
 #!/usr/bin/python
 
 def accept():
-	name = input("Enter name : ")
-	print("Hello " + name)
+    name = input("Enter name : ")
+    print("Hello " + name)
 
 def main():
-	accept()
+    accept()
 
 if __name__ == "__main__":
-	main()
+    main()
