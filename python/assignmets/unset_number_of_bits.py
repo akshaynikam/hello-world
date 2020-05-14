@@ -5,12 +5,7 @@
 #
 
 def turn_off_set_of_bits(number, bit_position, number_of_bits):
-    mask = 0;
-    for i in range(bit_position, bit_position + number_of_bits):
-        mask |= (1 << i)
-
-    print(mask)
-    mask = ~mask
+    mask = ~(((2 ** number_of_bits) - 1) << bit_position);
 
     return number & mask
 
