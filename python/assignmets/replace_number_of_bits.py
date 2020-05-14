@@ -5,12 +5,14 @@
 #
 
 def replace_bits(number1, number2, bit_position, number_of_bits):
-    for i in range(bit_position, bit_position + number_of_bits):
-        bit = number1 & (1 << i)
-        if bit:
-            number2 |= bit
-        else:
-            number2 &= ~(1 << i)
+    #
+    # | .. x1 .. | .. y1 .. | .. z1 .. | -> number1
+    # | .. x2 .. | .. y2 .. | .. z2 .. | -> number2
+    # | .. x2 .. | .. y1 .. | .. z2 .. | -> result (number2)
+    #
+    y1 = number1 & ((2 ** number_of_bits) - 1 << bit_position)
+    x2y0z2 = number2 & (~((2 ** number_of_bits) - 1 << bit_position))
+    number2 = x2y0z2 | y1
 
     return number2
 
