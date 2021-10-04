@@ -1,79 +1,84 @@
 #include <iostream>
-#include <vector>
 #include <string>
-#include <map>
 #include <queue>
+#include <map>
 
 using namespace std;
 
-class node {
-public:
-    string prefix;
-    map<char, node*> children;
-    bool isword;
+class autocomplete {
+    class node {
+    public:
+        string prefix;
+        char c;
+        map<char, node*> children;
+        bool word;
+        
+        node(char c, string prefix) {
+            this->c = c;
+            this->prefix = prefix;
+        }
+    };
 
-    node (string prefix) {
-        this->prefix = prefix;
-        this->isword = false;
+    node* root;
+public:
+    autocomplete() {
+        root = new node('/', "");
+        root->word = false;
+    }
+    void add_word(string str) {
+        node* cur = root;
+        for (int i = 0; i < str.length(); i++) {
+            if (cur->children.end() == cur->children.find(str[i])) {
+                cur->children[str[i]] = new node(str[i], str.substr(0, i + 1));
+            }
+
+            cur = cur->children[str[i]];
+            if (i == str.length() - 1)
+                cur->word = true;
+        }
+    }
+
+    void get_words(string str) {
+        node* cur = root;
+        for (int i = 0; i < str.length(); i++) {
+            if (cur->children.end() == cur->children.find(str[i])) {
+                break;
+            }
+
+            cur = cur->children[str[i]];
+            //if (cur->word)
+            //    cout << cur->prefix << " ";
+        }
+
+        if (cur->c == str[str.length() - 1]) {
+            queue<node*> q;
+            q.push(cur);
+            while (!q.empty()) {
+                node* temp = q.front();
+                q.pop();
+                if (temp->word)
+                    cout << temp->prefix << " ";
+                for (auto it : temp->children) {
+                    q.push(it.second);
+                }
+            }
+        }
+        cout << endl;
     }
 };
 
-node* trie = NULL;
-
-void insert_word(string str) {
-    node* cur = trie;
-    for (int i = 0; i < str.length(); i++) {
-        if (cur->children.end() == cur->children.find(str[i])) {
-            cur->children[str[i]] = new node(str.substr(0, i + 1));
-        }
-
-        cur = cur->children[str[i]];
-        if (i == str.length() - 1) cur->isword = true;
-    }
-}
-
-void build_trie(vector<string> dict) {
-    trie = new node("");
-    for (auto str : dict) insert_word(str);
-}
-
-void find_all_children(node* cur) {
-    if (cur->isword) cout << cur->prefix << " ";
-    for (auto it : cur->children) {
-        find_all_children(it.second);
-    }
-}
-
-void get_words_for_prefix(string prefix) {
-    node* cur = trie;
-    for (int i = 0; i < prefix.length(); i++) {
-        if (cur->children.end() != cur->children.find(prefix[i]))
-            cur = cur->children[prefix[i]];
-        else
-            return;
-    }
-
-    find_all_children(cur);
-    cout << endl;
-}
-
-void print_trie() {
-    node* cur = NULL;
-    queue<node*> q;
-    q.push(trie);
-    while (!q.empty()) {
-        cur = q.front();
-        q.pop();
-        cout << cur->prefix << " : " << cur->children.size() << endl;
-        for (auto it : cur->children) {
-            cout << it.first << " ";
-            q.push(it.second);
-        }
-    }
-}
-
 int main() {
-    build_trie(vector<string> {"abc", "acd", "bcd", "def", "a", "aba"});
-    get_words_for_prefix("b");
+    autocomplete ac;
+    ac.add_word("abc");
+    ac.add_word("acd");
+    ac.add_word("bcd");
+    ac.add_word("def");
+    ac.add_word("a");
+    ac.add_word("aba");
+
+    ac.get_words("ab");
+    ac.get_words("a");
+    ac.get_words("b");
+    ac.get_words("ak");
     return 0;
 }
