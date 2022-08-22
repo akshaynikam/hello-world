@@ -5,7 +5,18 @@
 // which might be included by multiple CPP files. --> It will be refereing to same global variable
 class demo {
     public:
-        static inline int var = 10;
+        static int var;
+        static constexpr int name = 515; // constexpr iplies inline since C++17
 };
+
+inline int demo::var = 10;
+struct myType {
+    int value;
+    myType(int i) : value(i) {}
+
+    static myType max;
+};
+
+inline myType myType::max{0};
 
 #endif //INLINE_VARIABLE_H
