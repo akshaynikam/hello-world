@@ -1,0 +1,48 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+The user ID of a new file is set to the effective user ID of the process.
+
+POSIX.1 allows an implementation to choose one of the following options to determine the group ID of a new file:
+1. The group ID of a new file can be the effective group ID of the process.
+2. The group ID of a new file can be the group ID of the directory in which the file is being created.
+
+If set-group-ID bit is set, the new file’s group ID is copied from the directory; otherwise, the new file’s group ID is set to the effective group ID of the process.
+
+How to set set-group-ID bit:
+chmod g+s <directory>
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+(base) aknikam@aknikam-ubuntu18:~/mango/hello-world/apiue$ touch /tmp/test/t1
+(base) aknikam@aknikam-ubuntu18:~/mango/hello-world/apiue$ stat /tmp/test/t1
+  File: /tmp/test/t1
+  Size: 0               Blocks: 0          IO Block: 4096   regular empty file
+Device: 801h/2049d      Inode: 4980829     Links: 1
+Access: (0664/-rw-rw-r--)  Uid: ( 1000/ aknikam)   Gid: ( 1000/ aknikam)
+Access: 2023-06-22 11:46:10.874600312 +0530
+Modify: 2023-06-22 11:46:10.870600173 +0530
+Change: 2023-06-22 11:46:10.870600173 +0530
+ Birth: -
+(base) aknikam@aknikam-ubuntu18:~/mango/hello-world/apiue$ sudo touch /tmp/test/t2
+[sudo] password for aknikam: 
+(base) aknikam@aknikam-ubuntu18:~/mango/hello-world/apiue$ stat /tmp/test/t2
+  File: /tmp/test/t2
+  Size: 0               Blocks: 0          IO Block: 4096   regular empty file
+Device: 801h/2049d      Inode: 4980833     Links: 1
+Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2023-06-22 11:46:27.091067085 +0530
+Modify: 2023-06-22 11:46:27.087066989 +0530
+Change: 2023-06-22 11:46:27.087066989 +0530
+ Birth: -
+(base) aknikam@aknikam-ubuntu18:~/mango/hello-world/apiue$ chmod g+s /tmp/test/
+(base) aknikam@aknikam-ubuntu18:~/mango/hello-world/apiue$ 
+(base) aknikam@aknikam-ubuntu18:~/mango/hello-world/apiue$ 
+(base) aknikam@aknikam-ubuntu18:~/mango/hello-world/apiue$ sudo touch /tmp/test/t3
+(base) aknikam@aknikam-ubuntu18:~/mango/hello-world/apiue$ stat /tmp/test/t3
+  File: /tmp/test/t3
+  Size: 0               Blocks: 0          IO Block: 4096   regular empty file
+Device: 801h/2049d      Inode: 4980832     Links: 1
+Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: ( 1000/ aknikam)
+Access: 2023-06-22 11:46:46.983467949 +0530
+Modify: 2023-06-22 11:46:46.971467745 +0530
+Change: 2023-06-22 11:46:46.971467745 +0530
+ Birth: -
+(base) aknikam@aknikam-ubuntu18:~/mango/hello-world/apiue$
